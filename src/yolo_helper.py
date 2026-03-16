@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 from PIL import Image
 from ultralytics import YOLO
@@ -27,8 +26,8 @@ class YolosHelper:
         # Get annotated image (BGR numpy array)
         annotated_bgr = result.plot()
         
-        # Convert back to PIL Image (RGB)
-        annotated_rgb = cv2.cvtColor(annotated_bgr, cv2.COLOR_BGR2RGB)
+        # Convert BGR to RGB using numpy slicing (no cv2 needed)
+        annotated_rgb = annotated_bgr[:, :, ::-1]
         annotated_image = Image.fromarray(annotated_rgb)
         
         # Extract detected object names and counts
